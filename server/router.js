@@ -1,35 +1,92 @@
-const express = require("express");
-const router = express.Router();
-const Catagory = require("./model/schema");
+var express = require('express'),
+    router = express.Router(),
+    dataController = require('./controller/DataController');
 
-router.put("/create", function (req, res, next) {
-	var cataogoryObject = new Catagory({
-		username: "Nouman",
-		catagory: ["politic", "techonology"],
-	});
-	// save model to database
-
-	cataogoryObject.save(function (err, Catagory) {
-		if (err) return console.error(err);
-		console.log(Catagory.name + " saved to collection.");
-	});
+var logger = global.logger;
+router.post('/getAllData', function (req, res) {
+    //logger.info('getAllData')
+    return dataController.getAllData(req, res);
 });
-router.get("/fetch:id", function (req, res, next) {
-	console.log(req.params.id);
-	Catagory.findById(req.params.id, function (err, post) {
-		if (err) return next(err);
-		res.json(post);
-	});
+router.post('/getData', function (req, res) {
+     //logger.info('getData')
+    return dataController.getData(req, res);
 });
 
-router.post("/fetch", async (req, res) => {
-	Catagory.findOne({ username: "Nouman" }, function (err, result) {
-		if (err) {
-			res.send(err);
-		} else {
-			console.log(result);
-			res.send(result);
-		}
-	});
+router.post('/updateData', function (req, res) {
+   //logger.info('updateData')
+    return dataController.updateData(req, res);
 });
+
+router.post('/removeData', function (req, res) {
+    //logger.info('removeData')
+    return dataController.removeData(req, res);
+});
+
+
+router.post('/create', function (req, res) {
+  //logger.info('create')
+    return dataController.insertData(req.body, res);
+});
+
+
+/**
+ * News Feeds
+ */
+
+router.post('/getAllNewsFeeds', function (req, res) {
+  //logger.info('getAllNewsFeeds')
+  return dataController.getAllNewsFeeds(req, res);
+});
+router.post('/getNewsFeeds', function (req, res) {
+   //logger.info('getNewsFeeds')
+  return dataController.getNewsFeeds(req, res);
+});
+
+router.post('/updateNewsFeeds', function (req, res) {
+ //logger.info('updateNewsFeeds')
+  return dataController.updateNewsFeeds(req, res);
+});
+
+router.post('/removeNewsFeeds', function (req, res) {
+  //logger.info('removeNewsFeeds')
+  return dataController.removeNewsFeeds(req, res);
+});
+
+
+router.post('/insertNewsFeeds', function (req, res) {
+//logger.info('insertNewsFeeds')
+  return dataController.insertNewsFeeds(req.body, res);
+});
+
+/**
+ * Opinion Feeds
+ */
+
+router.post('/getAllOpinionFeeds', function (req, res) {
+  //logger.info('getAllOpinionFeeds')
+  return dataController.getAllOpinionFeeds(req, res);
+});
+router.post('/getOpinionFeeds', function (req, res) {
+   //logger.info('getOpinionFeeds')
+  return dataController.getOpinionFeeds(req, res);
+});
+
+router.post('/updateOpinionFeeds', function (req, res) {
+ //logger.info('updateOpinionFeeds')
+  return dataController.updateOpinionFeeds(req, res);
+});
+
+router.post('/removeOpinionFeeds', function (req, res) {
+  //logger.info('removeOpinionFeeds')
+  return dataController.removeOpinionFeeds(req, res);
+});
+
+
+router.post('/insertOpinionFeeds', function (req, res) {
+//logger.info('insertOpinionFeeds')
+  return dataController.insertOpinionFeeds(req.body, res);
+});
+
+
+
 module.exports = router;
