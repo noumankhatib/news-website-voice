@@ -1,17 +1,42 @@
 const express = require("express");
+const bodyparser = require("body-parser");
+const app = express();
 const mongoose = require("mongoose");
-const routes = require("./router"); // new
+const config = require("./config.json");
+const logger = require("./logging");
+const router = require("./router");
+const { v4: uuidv4 } = require("uuid");
+global.logger=logger
+app.use(bodyparser.json({ type: 'application/json' }))
 
-const bodyParser = require("body-parser"); // new
-const Catagory = require("./model/schema");
-//var db = 'mongodb://localhost:8880/catagory'//db name catagory
-var db = "mongodb://localhost:27017/test"; //db name catagory
-mongoose.connect(db, { useNewUrlParser: true }).then(() => {
-	const app = express();
-	app.use(bodyParser.json()); // new
-	app.use("/api", routes);
-
-	app.listen(5000, () => {
-		console.log("Server has started!");
+try {
+	mongoose.connect(`mongodb://${config.mongodb.host}/${config.mongodb.db}`, {
+		useUnifiedTopology: true,
+		useNewUrlParser: true,
 	});
-});
+	logger.info(`Mongo up and running on ${config.mongodb.port}`);
+} catch (err) {
+	logger.error("Mongo db not running", err);
+	process.exit(0);
+}
+
+// namespace middleware
+
+let init = (req, res, next) => {
+	req.id = uuidv4();
+	req.txnStart = Date.now();
+	next();
+};
+// txn id init
+app.use(init);
+
+app.use("/voice", router);
+
+//handle 404
+
+app.use((req, res, next) => {
+	console.log("404");
+	res.send("no such page")
+})
+logger.info(`Api up and running on ${config.port}`);
+app.listen(config.port);
