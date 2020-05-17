@@ -5,11 +5,7 @@ const mongoose = require("mongoose");
 const config = require("./config.json");
 const logger = require("./logging");
 const router = require("./router");
-<<<<<<< HEAD
 //const { v4: uuidv4 } = require("uuid");
-=======
-const { v4: uuidv4 } = require("uuid");
->>>>>>> 53e3d0983d287c3a10beea3d1d7ab7ecb5b1fde4
 global.logger=logger
 app.use(bodyparser.json({ type: 'application/json' }))
 
