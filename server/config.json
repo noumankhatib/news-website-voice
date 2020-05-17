@@ -8,5 +8,6 @@
 	},
 	"log": {
 		"level": "all"
-	}
+	},
+	"serverIp":"http://localhost:3000"
 }

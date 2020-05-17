@@ -1,26 +1,29 @@
-let database = require('../components/Database');
-let newsFeeds = require('../components/newsFeedsDatabase');
-let OpinionFeeds = require('../components/opinionFeedsDatabase')
+let database = require('../db/Database');
+let articleDb = require('../db/articleDb');
 
 
 exports.getAllData = function (req, res) {
     database.getAllData().then((data) => {
+        res.status(200)
         return res.json({ 'success': true, data });
     }).catch((err) => {
+        res.status(400)
         return res.json({ 'success': false, error: err });
     });
 };
 
 exports.insertData = (req, res) => {
-    console.log("request body"+JSON.stringify(req))
-    database.insertUser(req).then(() => {
-        return res.send(200, {});
+    database.insertUser(req).then(() =>{
+        res.status(200)
+        return res.send({'success': false});
     }).catch(err => {
+        res.status(400)
         return res.json({ 'success': false, error: err });
     })
 }
 exports.getData = function (data, res) {
-    database.getData(data.body).then((data) => {
+    console.log("Welcome"+data)
+    database.getData(data).then((data) => {
         return res.json({ 'success': true, data });
     }).catch((err) => {
         return res.json({ 'success': false, error: err });
@@ -42,85 +45,44 @@ exports.removeData = function (data, res) {
     });
 };
 /**
- * News Feeds Data
+ * article Data
  */
-exports.getAllNewsFeeds = function (req, res) {
-    newsFeeds.getAllNewsFeeds().then((data) => {
+exports.getAllArticles = function (req, res) {
+    articleDb.getAllArticles().then((data) => {
         return res.json({ 'success': true, data });
     }).catch((err) => {
         return res.json({ 'success': false, error: err });
     });
 };
 
-exports.insertNewsFeeds = (req, res) => {
-    newsFeeds.insertNewsFeeds(req).then(() => {
+exports.insertArticles = (req, res) => {
+    console.log(req)
+    articleDb.insertArticles(req).then(() => {
         return res.send(200, {});
     }).catch(err => {
         return res.json({ 'success': false, error: err });
     })
 }
-exports.getNewsFeeds = function (data, res) {
-    newsFeeds.getNewsFeeds(data.body).then((data) => {
+exports.getArticles = function (data, res) {
+    articleDb.getArticles(data.body,parseInt(data.query.page),parseInt(data.query.limit)).then((data) => {
         return res.json({ 'success': true, data });
     }).catch((err) => {
         return res.json({ 'success': false, error: err });
     });
 };
-exports.updateNewsFeeds = function (data, res) {
-    newsFeeds.updateNewsFeeds(data.body).then((data) => {
-        return res.json({ 'success': true, data });
-    }).catch((err) => {
-        return res.json({ 'success': false, error: err });
-    });
-};
-
-exports.removeNewsFeeds = function (data, res) {
-    newsFeeds.removeNewsFeeds(data.body).then((data) => {
+exports.updateArticles = function (data, res) {
+    articleDb.updateArticles(data.body).then((data) => {
         return res.json({ 'success': true, data });
     }).catch((err) => {
         return res.json({ 'success': false, error: err });
     });
 };
 
-/**
- * Opinion Feeds
- */
-
-
-exports.getAllOpinionFeeds = function (req, res) {
-    OpinionFeeds.getAllOpinionFeeds().then((data) => {
+exports.removeArticles = function (data, res) {
+    articleDb.removeArticles(data.body).then((data) => {
         return res.json({ 'success': true, data });
     }).catch((err) => {
         return res.json({ 'success': false, error: err });
     });
 };
 
-exports.insertOpinionFeeds = (req, res) => {
-    OpinionFeeds.insertOpinionFeeds(req).then(() => {
-        return res.send(200, {});
-    }).catch(err => {
-        return res.json({ 'success': false, error: err });
-    })
-}
-exports.getOpinionFeeds = function (data, res) {
-    OpinionFeeds.getOpinionFeeds(data.body).then((data) => {
-        return res.json({ 'success': true, data });
-    }).catch((err) => {
-        return res.json({ 'success': false, error: err });
-    });
-};
-exports.updateOpinionFeeds = function (data, res) {
-    OpinionFeeds.updateOpinionFeeds(data.body).then((data) => {
-        return res.json({ 'success': true, data });
-    }).catch((err) => {
-        return res.json({ 'success': false, error: err });
-    });
-};
-
-exports.removeOpinionFeeds = function (data, res) {
-    OpinionFeeds.removeOpinionFeeds(data.body).then((data) => {
-        return res.json({ 'success': true, data });
-    }).catch((err) => {
-        return res.json({ 'success': false, error: err });
-    });
-};
