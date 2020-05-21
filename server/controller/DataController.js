@@ -85,4 +85,3 @@ exports.removeArticles = function (data, res) {
         return res.json({ 'success': false, error: err });
     });
 };
-

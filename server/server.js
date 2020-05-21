@@ -5,10 +5,11 @@ const mongoose = require("mongoose");
 const config = require("./config.json");
 const logger = require("./logging");
 const router = require("./router");
+var cors = require('cors');
 //const { v4: uuidv4 } = require("uuid");
 global.logger=logger
 app.use(bodyparser.json({ type: 'application/json' }))
-
+app.use(cors());
 try {
 	mongoose.connect(`mongodb://${config.mongodb.host}/${config.mongodb.db}`, {
 		useUnifiedTopology: true,
