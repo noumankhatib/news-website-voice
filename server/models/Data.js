@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const DataSchema = new Schema(
     {
         username:String,
-        catagorys:Array
+        categorys:Array
     }
 );
 

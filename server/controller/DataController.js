@@ -48,7 +48,16 @@ exports.removeData = function (data, res) {
  * article Data
  */
 exports.getAllArticles = function (req, res) {
-    articleDb.getAllArticles().then((data) => {
+    let pageNo = parseInt(req.query.pageNo)
+    let size = parseInt(req.query.size)
+    var query = {}
+  if(pageNo < 0 || pageNo === 0) {
+        response = {"error" : true,"message" : "invalid page number, should start with 1"};
+        return res.json(response)
+  }
+  query.page = pageNo
+  query.limit = size
+    articleDb.getAllArticles(query).then((data) => {
         return res.json({ 'success': true, data });
     }).catch((err) => {
         return res.json({ 'success': false, error: err });
@@ -63,8 +72,17 @@ exports.insertArticles = (req, res) => {
         return res.json({ 'success': false, error: err });
     })
 }
-exports.getArticles = function (data, res) {
-    articleDb.getArticles(data.body,parseInt(data.query.page),parseInt(data.query.limit)).then((data) => {
+exports.getArticles = function (req, res) {
+    let pageNo = parseInt(req.query.pageNo)
+    let size = parseInt(req.query.size)
+    var query = {}
+  if(pageNo < 0 || pageNo === 0) {
+        response = {"error" : true,"message" : "invalid page number, should start with 1"};
+        return res.json(response)
+  }
+  query.page = pageNo
+  query.limit = size
+    articleDb.getArticles(req.body,query).then((data) => {
         return res.json({ 'success': true, data });
     }).catch((err) => {
         return res.json({ 'success': false, error: err });

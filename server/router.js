@@ -2,27 +2,27 @@ var express = require('express'),
     router = express.Router(),
     dataController = require('./controller/DataController');
 
-router.get('/catagory/getAll', function (req, res) {
+router.get('/category/getAll', function (req, res) {
    logger.info('getAllData')
     return dataController.getAllData(req, res);
 });
-router.get('/catagory/get/:username', function (req, res) {
+router.get('/category/get/:username', function (req, res) {
     logger.info('getData')
     return dataController.getData(JSON.parse(req.params.username), res);
 });
 
-router.put('/catagory/update', function (req, res) {
+router.put('/category/update', function (req, res) {
   logger.info('updateData')
     return dataController.updateData(req, res);
 });
 
-router.delete('/catagory/remove', function (req, res) {
+router.delete('/category/remove', function (req, res) {
    logger.info('removeData')
     return dataController.removeData(req, res);
 });
 
 
-router.post('/catagory/create', function (req, res) {
+router.post('/category/create', function (req, res) {
  logger.info('create')
     return dataController.insertData(req.body, res);
 });

@@ -1,68 +1,51 @@
-import React from "react";
-
+import React, { Component,useState,useEffect } from "react";
+import Posts from '../src/components/articles/Posts'
+import Pagination from '../src/components/articles/Pagination'
+import { CardDeck, Card, useAccordionToggle } from "react-bootstrap";
 import "./App.css";
-import { CardDeck, Card } from "react-bootstrap";
+import { useParams } from 'react-router-dom';
+import {getAllArticles} from '../src/components/utils/https-client'
+const App  =() => {
+	
+	let {page} = useParams();
+	const [posts, setPosts] = useState([]);
+	const [loading, setLoading] = useState(false);
+	const [currentPage, setCurrentPage] = useState(1);
+	const [postsPerPage,setPostsPerPage] = useState(10);
+	const [postsLength, setPostsLength] = useState(0);
 
-class App extends React.Component {
-	constructor() {
-		super();
-		this.data = [
-			{
-				_id: "5ebfe27a3d73c057ccbdc4db",
-				catagory: "politic",
-				title: "recent fight 1",
-				articletype: "opinionFeeds",
-				author: "nouman",
-				content: "Welcome to the world",
-				url: "www.facebook.com",
-				v: 0,
-			},
-			{
-				_id: "5ebfe27c3d73c057ccbdc4dc",
-				catagory: "politic",
-				title: "recent fight 2",
-				articletype: "opinionFeeds",
-				author: "nouman",
-				content: "Welcome to the world",
-				url: "www.facebook.com",
-				_v: 0,
-			},
-			{
-				_id: "5ebfe27c3d73c057ccbdc4dc",
-				catagory: "politic",
-				title: "recent fight 2",
-				articletype: "opinionFeeds",
-				author: "nouman",
-				content: "Welcome to the world",
-				url: "www.facebook.com",
-				_v: 0,
-			},
-		];
-	}
-	render() {
-		let cards = this.data.map((d, index) => {
-			console.log(d, index);
-			// eslint-disable-next-line no-unused-expressions
-			return (
-				<Card>
-					<Card.Img variant="top" src="holder.js/100px160" />
-					<Card.Body>
-						<Card.Title>{d.title}</Card.Title>
-						<Card.Text>{d.content}</Card.Text>
-					</Card.Body>
-					<Card.Footer>
-						<small className="text-muted">Author: {d.author}</small>
-					</Card.Footer>
-				</Card>
-			);
-		});
+			useEffect(()=>{
+					setLoading(true);
+					if(!page)
+					{
+						page =1;
+					}
 
-		return (
+					let filter =`pageNo=${page}&size=${postsPerPage}`
+			getAllArticles(filter)
+			   .then((data) => {
+					setPosts(data.data.docs);
+						setCurrentPage(data.data.page)
+						setPostsPerPage(data.data.limit)
+						setPostsLength(data.data.totalDocs)
+						setLoading(false)
+					})
+					.catch(error => {
+					   // this.setState({ errorMessage: error.toString() });
+						console.error('There was an error!', error);
+					});
+				},[])
+		  
+		return(
 			<div className="App">
-				<CardDeck>{cards}</CardDeck>
-			</div>
-		);
-	}
+					<Posts posts={posts} loading={loading} />
+							<Pagination
+							postsPerPage={postsPerPage}
+							totalPosts={postsLength}
+						/>
+			  </div>
+		)
+
 }
 
 export default App;

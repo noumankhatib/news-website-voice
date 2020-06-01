@@ -1,7 +1,7 @@
 var Data = require('../models/Data');
 exports.getAllData = function () {
     return new Promise((resolve, reject) => {
-        Data.find((err, data) => {
+        Data.find({},'categorys',(err, data) => {
             if (err) {
                logger.error('Database', 'Error ocurred while getting data', err);
                 return reject(err);

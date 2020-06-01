@@ -1,57 +1,65 @@
-import React, { Component } from "react";
+import React, { Component,useState,useEffect } from "react";
 import { getAllArticles } from "../utils/https-client";
-import NavBar from "../navbar/navbar";
-import { CardGroup } from "react-bootstrap";
-//import { Container, Row, Col, Alert, Form } from 'react-bootstrap';
-// import DatePicker from 'react-datepicker';
-// import "react-datepicker/dist/react-datepicker.css";
-// import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-// import '../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
-
-class Home extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			isLoading: true,
-			articles: [],
-			error: null,
-		};
-
-		getAllArticles()
-			.then((result) => {
-				this.setState({
-					articles: result,
-					isLoading: false,
+import Posts from './Posts'
+import Pagination from './Pagination'
+import "../../App.css";
+import { CardDeck, Card } from "react-bootstrap";
+import { useParams } from 'react-router-dom';
+import "../../App.css";
+const Home =() => {
+	let {page} = useParams();
+	const [posts, setPosts] = useState([]);
+	const [loading, setLoading] = useState(false);
+	const [currentPage, setCurrentPage] = useState();
+	const [postsPerPage,setPostsPerPage] = useState();
+	const [totalPosts,setTotalPosts] = useState();
+		useEffect(()=>{
+			const fetchPosts=async()=>
+			{
+				const requestOptions = {
+					method: 'get',
+					headers: { 'Content-Type': 'application/json' }
+				};
+				fetch('http://localhost:5000/api/v1/articles/getAllArticles', requestOptions)
+				.then(async response => {
+					const data = await response.json();
+			
+					if (!response.ok) {
+						
+						const error = (data && data.message) || response.status;
+						//return reject(error);
+					}
+					console.log("data.data"+data.data.limit)
+					setPostsPerPage(data.data.limit)
+					setCurrentPage(data.data.page)
+					setPosts(data.data);
+					setTotalPosts(data.data.totalDocs)
+					setLoading(false)
+				})
+				.catch(error => {
+				   // this.setState({ errorMessage: error.toString() });
+					console.error('There was an error!', error);
 				});
-			})
-			.catch((error) => {
-				this.setState({ error, isLoading: false });
-			});
-	}
+			}
+			fetchPosts();
+		},[])
+// Get current posts
+const indexOfLastPost = currentPage * postsPerPage;
+const indexOfFirstPost = indexOfLastPost - postsPerPage;
+const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+const paginate = pageNumber => setCurrentPage(pageNumber);
 
-	render() {
-		const { articles, isLoading } = this.state;
-		console.log("articles" + JSON.stringify(articles));
-		return (
-			<React.Fragment>
-				<div>
-					<NavBar />
-				</div>
-				<h1>React Fetch - Blog</h1>
+	return(
+		<div className="App">
+				<CardDeck>
+					<Posts posts={currentPosts} loading={loading} />
+					<Pagination
+					  postsPerPage={postsPerPage}
+		 		 totalPosts={totalPosts}
+		  paginate={paginate}></Pagination>
+		  </CardDeck>
+			</div>
+	)
 
-				{!isLoading ? (
-					articles.data.map((article) => {
-						return (
-							<div>
-								<CardGroup></CardGroup>
-							</div>
-						);
-					})
-				) : (
-					<p>Loading...</p>
-				)}
-			</React.Fragment>
-		);
-	}
 }
 export default Home;
