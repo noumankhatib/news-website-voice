@@ -9,6 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import NavBar from "./components/navbar/navbar";
 import Home from "./components/articles/home";
 import AddArticle from "./components/form/AddArticle";
+import AddCategory from "./components/form/AddCategory";
 import Articles from "./components/articles/articles"
 import "holderjs";
 
@@ -28,6 +29,9 @@ ReactDOM.render(
 				</Route>
 				<Route exact path="/displayarticles">
 					<Articles />
+				</Route>
+				<Route exact path="/addcategory">
+					<AddCategory />
 				</Route>
 				<Route exact path="/articles/:articleType/:category">
 					<Articles />

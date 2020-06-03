@@ -1,12 +1,12 @@
 import React from 'react';
-import { CardDeck, Card ,Button,CardGroup} from "react-bootstrap";
+import { CardDeck, Card ,Button} from "react-bootstrap";
 import "../../App.css";
 import {imp1} from "../asserts/download.jpeg"
 const Post =({posts, loading})=>{
     if(loading)
     {
         return <h2>loading.......</h2>
-    }
+    } 
     return(
         posts.map(post=>(
                 <CardDeck>
@@ -17,12 +17,12 @@ const Post =({posts, loading})=>{
             <small className="text-muted">Author: {post.author}</small>
             </Card.Header>
             <br/>
-                <Card.Title>Title: {post.title}</Card.Title>
-                <Card.Subtitle>Category: {post.category}</Card.Subtitle>
-                <Card.Title>Article Type: {post.articleType}</Card.Title>
-                <Card.Text>Description: {post.description}</Card.Text>
-                <Card.Text>Content: {post.content}</Card.Text>
-                <Card.Link>Url: {post.url}</Card.Link><br/>
+                <Card.Title>{post.title}</Card.Title>
+                <Card.Subtitle>{post.category}</Card.Subtitle>
+                <Card.Title>{post.articleType}</Card.Title>
+                <Card.Text>{post.description}</Card.Text>
+                <Card.Text>{post.content}</Card.Text>
+                <Card.Link>{post.url}</Card.Link><br/>
                 <Button variant="primary">Read More</Button>
             </Card.Body>
         </Card>
