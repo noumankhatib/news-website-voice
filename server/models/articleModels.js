@@ -11,10 +11,8 @@ const articles = new Schema({
     content: String,
     image: { data: Buffer, contentType: String },
     url: String,
-    createdAt: {
-        type: Date,
-        default: Date.now
-      }
+    createdAt: Date,
+  
 });
 articles.plugin(mongoosePaginate);
 

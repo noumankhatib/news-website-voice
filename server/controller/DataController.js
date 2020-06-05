@@ -57,6 +57,7 @@ exports.getAllArticles = function (req, res) {
   }
   query.page = pageNo
   query.limit = size
+  
     articleDb.getAllArticles(query).then((data) => {
         return res.json({ 'success': true, data });
     }).catch((err) => {

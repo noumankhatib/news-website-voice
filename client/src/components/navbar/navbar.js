@@ -52,7 +52,7 @@ const NavBar = () => {
 							))
 						}
 					</NavDropdown>
-					<Nav.Link href="/addcategory">AddCatagory</Nav.Link>
+					<Nav.Link href="/addcategory">AddCategory</Nav.Link>
 					<Nav.Link href="/addarticle">AddArticle</Nav.Link>
 				</Nav>
 				<Form inline>

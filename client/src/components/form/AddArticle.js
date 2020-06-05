@@ -22,7 +22,7 @@ class AddArticle extends Component {
   componentDidMount() {
     getAllCatagory()
       .then((result) => {
-        this.setState({ categorys: JSON.stringify(result), loading: false })
+        this.setState({ categorys: result, loading: false })
 
 
       })
@@ -62,7 +62,10 @@ class AddArticle extends Component {
   }
 
   render() {
+    const { categorys, loading } = this.state;
+    console.log(categorys + "loading" + loading)
     return (
+
       <Form onSubmit={this.handleSubmit}>
         <Form.Row>
           <Form.Group as={Col} controlId="formGridEmail">
@@ -89,29 +92,26 @@ class AddArticle extends Component {
         <Form.Row>
           <Form.Group as={Col} controlId="formGridState">
             <Form.Label>Article Type</Form.Label>
-            <Form.Control as="select" name="newsFeeds" required onChange={this.handleInputChange} defaultValue="News Feeds">
-              <option name="newsFeeds" > News Feeds</option>
-              <option name="opinionFeeds" >Option Feeds</option>
+            <Form.Control as="select" name = {this.state.articleType} required onChange={this.handleInputChange}>
+              <option articleType="newsFeeds" > News Feeds</option>
+              <option articleType="opinionFeeds" >Option Feeds</option>
             </Form.Control>
           </Form.Group>
 
-
           <Form.Group as={Col} controlId="formGridState">
             <Form.Label>Category</Form.Label>
-            <Form.Control as="select" defaultValue="Choose...">
+            <Form.Control as="select" name = {this.state.category}  required onChange={this.handleInputChange} defaultValue="Choose...">
               {
-                this.state.loading
+                !loading
                   ?
-                  this.state.categorys.map(category => (
-                    <option>
+                  categorys.map(category => (
+                    <option category={category}>
                       {category}
                     </option>
 
                   )) :
                   (<h2>loading.......</h2>)
               }
-              <option>Choose...</option>
-              <option>...</option>
             </Form.Control>
           </Form.Group>
         </Form.Row>
@@ -128,7 +128,7 @@ class AddArticle extends Component {
           Submit
   </Button>
       </Form>
-      
+
     );
   }
 }
