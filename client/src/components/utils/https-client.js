@@ -24,6 +24,7 @@ export const getAllArticles = (filter) => {
             .catch(error => {
                 // this.setState({ errorMessage: error.toString() });
                 console.error('There was an error!', error);
+                return reject(error)
             });
 
     })
@@ -53,13 +54,13 @@ export const getArticles = (articleType, category, filter) => {
                     const error = (data && data.message) || response.status;
                     return reject(error);
                 }
-                console.log("data!!!!!!!!!!!!" + JSON.stringify(data))
                 return resolve(data)
                 // this.setState({ postId: data.id })
             })
             .catch(error => {
                 // this.setState({ errorMessage: error.toString() });
-                console.error('There was an error!', error);
+             //   console.error('There was an error!', error);
+                return reject(error)
             });
 
     })
@@ -87,7 +88,8 @@ export const getAllCatagory = () => {
             })
             .catch(error => {
                 // this.setState({ errorMessage: error.toString() });
-                console.error('There was an error!', error);
+                //console.error('There was an error!', error);
+                    return reject(error)
             });
 
     })
@@ -95,14 +97,30 @@ export const getAllCatagory = () => {
 export const addArticle = (data) => {
     return new Promise((resolve, reject) => {
         const requestOptions = {
-            method: 'POST',
+            method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         };
         fetch('http://localhost:5000/api/v1/articles/createArticles', requestOptions)
             .then(() => resolve('Record Created'))
             .catch(err => {
-                console.error(err);
+               return reject(err)
+            });
+    })
+}
+
+
+export const addCategory = (category) => {
+    return new Promise((resolve, reject) => {
+        const requestOptions = {
+            method: 'put',
+            headers: { 'Content-Type': 'application/json' },
+            body: {username:"nouman",categorys:[category]}
+        };
+        fetch('http://localhost:5000/api/v1/category/update1', requestOptions)
+            .then(() => resolve('Record Created'))
+            .catch(err => {
+                reject(err)
             });
     })
 }

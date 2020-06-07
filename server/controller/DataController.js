@@ -22,7 +22,6 @@ exports.insertData = (req, res) => {
     })
 }
 exports.getData = function (data, res) {
-    console.log("Welcome"+data)
     database.getData(data).then((data) => {
         return res.json({ 'success': true, data });
     }).catch((err) => {

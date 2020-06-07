@@ -15,7 +15,8 @@ class AddArticle extends Component {
       url: '',
       categorys: [],
       error: '',
-      loading: true
+      loading: true,
+      imagePreviewUrl: ''
     };
 
   }
@@ -35,10 +36,32 @@ class AddArticle extends Component {
       [e.target.name]: e.target.value,
     });
   };
+  handleImageChange(e) {
+    //e.preventDefault();
+    // let reader = new FileReader();
+    // let file = e.target.files[0];
 
+    // reader.onloadend = () => {
+    //   this.setState({
+    //     image: reader.result
+    //   });
+    // }
+
+    // let imageUrl = reader.readAsDataURL(file)
+    // this.setState({image:imageUrl})
+  }
   handleSubmit = e => {
     e.preventDefault();
+  //  let reader = new FileReader()
     const { category, title, articleType, author, description, content, image, url } = this.state;
+  //   console.log("image1"+JSON.stringify(image))
+  //  // let image1 = reader.readAsDataURL(image)
+  // // console.log("welcome"+JSON.stringify(reader.image))
+  //  reader.readAsDataURL(image);//line with error
+  //  reader.onloadend = function() {
+  //      var base64data = reader.result;
+  //      console.log(base64data);
+  //  };
     const record = {
       category,
       title,
@@ -49,6 +72,7 @@ class AddArticle extends Component {
       image,
       url
     };
+    console.log("record" + JSON.stringify(record))
 
     addArticle(record)
       .then((result) => {
@@ -63,7 +87,6 @@ class AddArticle extends Component {
 
   render() {
     const { categorys, loading } = this.state;
-    console.log(categorys + "loading" + loading)
     return (
 
       <Form onSubmit={this.handleSubmit}>
@@ -81,7 +104,7 @@ class AddArticle extends Component {
 
         <Form.Group controlId="formGridAddress1">
           <Form.Label>Description</Form.Label>
-          <Form.Control size="sm" type="text" placeholder="Author" name="description" required onChange={this.handleInputChange} />
+          <Form.Control size="sm" type="text" placeholder="Description" name="description" required onChange={this.handleInputChange} />
         </Form.Group>
 
         <Form.Group controlId="formGridAddress2">
@@ -92,20 +115,22 @@ class AddArticle extends Component {
         <Form.Row>
           <Form.Group as={Col} controlId="formGridState">
             <Form.Label>Article Type</Form.Label>
-            <Form.Control as="select" name = {this.state.articleType} required onChange={this.handleInputChange}>
-              <option articleType="newsFeeds" > News Feeds</option>
-              <option articleType="opinionFeeds" >Option Feeds</option>
+            <Form.Control as="select" name="articleType" required onChange={this.handleInputChange}>
+              <option>Default.............</option>
+              <option value="newsFeeds"> News Feeds</option>
+              <option value="opinionFeeds" >Option Feeds</option>
             </Form.Control>
           </Form.Group>
 
           <Form.Group as={Col} controlId="formGridState">
             <Form.Label>Category</Form.Label>
-            <Form.Control as="select" name = {this.state.category}  required onChange={this.handleInputChange} defaultValue="Choose...">
+            <Form.Control as="select" name="category" required onChange={this.handleInputChange}>
+              <option>Default.............</option>
               {
                 !loading
                   ?
                   categorys.map(category => (
-                    <option category={category}>
+                    <option value={category}>
                       {category}
                     </option>
 
@@ -122,7 +147,8 @@ class AddArticle extends Component {
 
           <Form.Group as={Col} controlId="formGridPassword">
             <Form.Label>Image</Form.Label>
-            <Form.File.Input type="file" name="image" onChange={this.handleInputChange} />   </Form.Group>
+            <Form.File.Input type="file" name="image" onChange={this.handleInputChange} />
+          </Form.Group>
         </Form.Row>
         <Button variant="primary" type="submit">
           Submit

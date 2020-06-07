@@ -10,9 +10,10 @@ var cors = require('cors');
 global.logger=logger
 app.use(bodyparser.json({ type: 'application/json' }))
 app.use(cors());
+
 try {
 	mongoose.connect(`mongodb://${config.mongodb.host}/${config.mongodb.db}`, {
-		useUnifiedTopology: true,
+			useUnifiedTopology: true,
 		useNewUrlParser: true,
 	});
 	logger.info(`Mongo up and running on ${config.mongodb.port}`);

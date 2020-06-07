@@ -13,6 +13,7 @@ router.get('/category/get/:username', function (req, res) {
 
 router.put('/category/update', function (req, res) {
   logger.info('updateData')
+  console.log("update")
     return dataController.updateData(req, res);
 });
 

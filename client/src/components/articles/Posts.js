@@ -1,7 +1,7 @@
 import React from 'react';
 import { CardDeck, Card ,Button} from "react-bootstrap";
 import "../../App.css";
-import {imp1} from "../asserts/download.jpeg"
+import {imp1} from "../asserts/nouman.jpg"
 const Post =({posts, loading})=>{
     if(loading)
     {

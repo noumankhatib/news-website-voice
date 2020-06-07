@@ -29,7 +29,8 @@ exports.getData = function (data) {
 
 exports.updateData = function (data) {
     return new Promise((resolve, reject) => {
-        Data.updateOne( { "username" : data.username },{ $push: { "catagorys": {$each : data.catagorys} } },(err, data) => {
+        console.log("data!!!!!!!!!!!!!!!!!!!")
+        Data.updateOne( { "username" : data.username },{ $push: { "categorys": {$each : data.categorys} } },(err, data) => {
             if (err) {
                logger.error('Database', 'Error ocurred while getting data', err);
                 return reject(err);
@@ -42,6 +43,7 @@ exports.updateData = function (data) {
 }
 exports.insertUser = (obj) => {
     return new Promise((resolve, reject) => {
+        console.log("obj"+JSON.stringify(obj))
         let data = new Data(obj);
         data.save().then(() => {
             return resolve();

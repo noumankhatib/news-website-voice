@@ -1,7 +1,7 @@
 let articles = require('../models/articleModels')
 exports.getAllArticles = function (query) {
     return new Promise((resolve, reject) => {
-        articles.paginate({},query,{ sort :{ createdAt : -1}},(err, data) => {
+        articles.paginate({},query,(err, data) => {
             if (err) {
                logger.error('Database', 'Error ocurred while getting data', err);
                 return reject(err);
@@ -15,7 +15,7 @@ exports.getAllArticles = function (query) {
 
 exports.getArticles = function (articlesSearch,query) {
     return new Promise((resolve, reject) => {
-        articles.paginate(articlesSearch, query,{ sort :{ createdAt : -1}}, function(err, articlesResult) {
+        articles.paginate(articlesSearch, query, function(err, articlesResult) {
        // articles.find(articlesSearch).skip(skip).limit(limit).exec((err, articlesResult) => {
             if (err) {
                logger.error('Database', 'Error ocurred while getting data', err);
@@ -47,7 +47,8 @@ exports.insertArticles = (obj) => {
     return new Promise((resolve, reject) => {
         let data = new articles(obj);
         //.createdAt = Date.now;
-      //  data.createdAt = new Date().getTime()
+       data.createdAt = new Date().getTime()
+       console.log("createdAt!!!!!!!"+JSON.stringify(data.createdAt))
         data.save().then(() => {
             return resolve();
         }).catch((err) => {
