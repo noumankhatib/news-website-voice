@@ -1,11 +1,11 @@
 import React, { Component, useState, useEffect } from "react";
-import Posts from '../src/components/articles/Posts'
-import Pagination from '../src/components/articles/Pagination'
+import Posts from "../src/components/articles/Posts";
+import Pagination from "../src/components/articles/Pagination";
 import "./App.css";
-import { useParams } from 'react-router-dom';
-import { getAllArticles } from '../src/components/utils/https-client'
+import { useParams } from "react-router-dom";
+import { getAllArticles } from "../src/components/utils/https-client";
+import { CardDeck } from "react-bootstrap";
 const App = () => {
-
 	let { page } = useParams();
 	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(false);
@@ -19,31 +19,30 @@ const App = () => {
 			page = 1;
 		}
 
-		let filter = `pageNo=${page}&size=${postsPerPage}`
+		let filter = `pageNo=${page}&size=${postsPerPage}`;
 		getAllArticles(filter)
 			.then((data) => {
 				setPosts(data.data.docs);
-				setCurrentPage(data.data.page)
-				setPostsPerPage(data.data.limit)
-				setPostsLength(data.data.totalDocs)
-				setLoading(false)
+				setCurrentPage(data.data.page);
+				setPostsPerPage(data.data.limit);
+				setPostsLength(data.data.totalDocs);
+				setLoading(false);
 			})
-			.catch(error => {
+			.catch((error) => {
 				// this.setState({ errorMessage: error.toString() });
-				console.error('There was an error!', error);
+				console.error("There was an error!", error);
 			});
-	}, [])
+	}, []);
 
 	return (
 		<div className="App">
-			<Posts posts={posts} loading={loading} />
-			<Pagination
-				postsPerPage={postsPerPage}
-				totalPosts={postsLength}
-			/>
-		</div>
-	)
+			<CardDeck>
+				<Posts posts={posts} loading={loading} />
+			</CardDeck>
 
-}
+			<Pagination postsPerPage={postsPerPage} totalPosts={postsLength} />
+		</div>
+	);
+};
 
 export default App;

@@ -1,5 +1,5 @@
 import { Navbar, NavDropdown, Form, Button, Nav } from "react-bootstrap";
-import { getAllCatagory } from '../utils/https-client'
+import { getAllCatagory } from "../utils/https-client";
 import React, { Component, useState, useEffect } from "react";
 
 const NavBar = () => {
@@ -11,13 +11,13 @@ const NavBar = () => {
 		getAllCatagory()
 			.then((result) => {
 				setCategorys(result);
-				setLoading(false)
+				setLoading(false);
 			})
 			.catch((error) => {
 				setCategorys(error);
-				setLoading(false)
+				setLoading(false);
 			});
-	}, [])
+	}, []);
 
 	return (
 		<Navbar bg="light" expand="lg">
@@ -27,32 +27,30 @@ const NavBar = () => {
 				<Nav className="mr-auto">
 					<Nav.Link href="/">Home</Nav.Link>
 					<NavDropdown title="News" id="basic-nav-dropdown">
-						{
-							!loading
-								?
-								categorys.map(category => (
-									<NavDropdown.Item href={`/articles/newsFeeds/${category}`} >
-										{category}
-									</NavDropdown.Item>
-
-								)) :
-								(<h2>loading.......</h2>)
-						}
-
+						{!loading ? (
+							categorys.map((category) => (
+								<NavDropdown.Item
+									href={`/articles/newsFeeds/${category}`}
+								>
+									{category}
+								</NavDropdown.Item>
+							))
+						) : (
+							<h2>loading.......</h2>
+						)}
 					</NavDropdown>
 					<NavDropdown title="Opinion" id="basic-nav-dropdown">
-						{
-							!loading
-								?
-								categorys.map(category => (
-									<NavDropdown.Item href={`/articles/opinionFeeds/${category}`} >
-										{category}
-									</NavDropdown.Item>
-
-								)) :
-								(<h2>loading.......</h2>)
-
-						}
+						{!loading ? (
+							categorys.map((category) => (
+								<NavDropdown.Item
+									href={`/articles/opinionFeeds/${category}`}
+								>
+									{category}
+								</NavDropdown.Item>
+							))
+						) : (
+							<h2>loading.......</h2>
+						)}
 					</NavDropdown>
 					<Nav.Link href="/addcategory">AddCategory</Nav.Link>
 					<Nav.Link href="/addarticle">AddArticle</Nav.Link>
@@ -63,5 +61,5 @@ const NavBar = () => {
 			</Navbar.Collapse>
 		</Navbar>
 	);
-}
+};
 export default NavBar;
