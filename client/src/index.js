@@ -12,6 +12,7 @@ import Test from "./components/form/test";
 import Articles from "./components/articles/articles";
 import "holderjs";
 import Cards from "./components/articles/cards";
+import UI from "./components/articles/ui";
 
 ReactDOM.render(
 	<div>
@@ -42,6 +43,9 @@ ReactDOM.render(
 					</Route>
 					<Route exact path="/articles/:articleType/:category">
 						<Articles />
+					</Route>
+					<Route exact path="/ui">
+						<UI />
 					</Route>
 				</Switch>
 			</Router>
