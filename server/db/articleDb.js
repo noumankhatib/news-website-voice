@@ -70,10 +70,7 @@ exports.updateArticles = function (data) {
 exports.insertArticles = (obj) => {
 	return new Promise((resolve, reject) => {
 		let data = new articles(obj);
-		//.createdAt = Date.now;
 		data.createdAt = new Date().getTime();
-		console.log("createdAt!!!!!!!" + JSON.stringify(data.createdAt));
-		//console.log("Im!!!!!!!" + JSON.stringify(data.image));
 		data.save()
 			.then(() => {
 				return resolve();

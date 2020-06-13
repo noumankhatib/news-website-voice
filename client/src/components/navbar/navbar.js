@@ -1,8 +1,8 @@
 import { Navbar, NavDropdown, Form, Button, Nav } from "react-bootstrap";
 import { getAllCatagory } from "../utils/https-client";
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
-const NavBar = () => {
+const NavBar = (prop) => {
 	const [categorys, setCategorys] = useState([]);
 	const [loading, setLoading] = useState(false);
 
@@ -36,8 +36,8 @@ const NavBar = () => {
 								</NavDropdown.Item>
 							))
 						) : (
-							<h2>loading.......</h2>
-						)}
+								<h2>loading.......</h2>
+							)}
 					</NavDropdown>
 					<NavDropdown title="Opinion" id="basic-nav-dropdown">
 						{!loading ? (
@@ -49,14 +49,14 @@ const NavBar = () => {
 								</NavDropdown.Item>
 							))
 						) : (
-							<h2>loading.......</h2>
-						)}
+								<h2>loading.......</h2>
+							)}
 					</NavDropdown>
-					<Nav.Link href="/addcategory">AddCategory</Nav.Link>
-					<Nav.Link href="/addarticle">AddArticle</Nav.Link>
+					<Nav.Link href="/addcategory" disabled>AddCategory</Nav.Link>
+					<Nav.Link href="/addarticle" disabled>AddArticle</Nav.Link>
 				</Nav>
 				<Form inline>
-					<Button variant="outline-success">Login</Button>
+					<Button variant="outline-success" href="/login" >Login</Button>
 				</Form>
 			</Navbar.Collapse>
 		</Navbar>

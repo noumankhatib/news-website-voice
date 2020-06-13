@@ -57,6 +57,18 @@ logger.info('insertArticles')
   return dataController.insertArticles(req.body, res);
 });
 
+//user register
+
+
+router.post('/user/register', function (req, res) {
+  logger.info('insertArticles')
+    return dataController.insertUserRecord(req.body, res);
+  });
+
+  router.post('/user/login', function (req, res) {
+    logger.info('insertArticles')
+      return dataController.authenticateUser(req.body, res);
+    });
 
 
 module.exports = router;

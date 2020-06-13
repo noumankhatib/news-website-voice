@@ -13,6 +13,9 @@ import Articles from "./components/articles/articles";
 import "holderjs";
 import Cards from "./components/articles/cards";
 import UI from "./components/articles/ui";
+import Login from "./components/form/adminUserSignin";
+import SignUp from "./components/form/adminUserSignup";
+
 
 ReactDOM.render(
 	<div>
@@ -20,6 +23,8 @@ ReactDOM.render(
 		<Container>
 			<Router>
 				<Switch>
+					<Route path="/login" component={Login} />
+					<Route path="/register" component={SignUp} />
 					<Route exact path="/cards">
 						<Cards />
 					</Route>
@@ -40,7 +45,7 @@ ReactDOM.render(
 					</Route>
 					<Route exact path="/test">
 						<Test />
-					</Route>
+s					</Route>
 					<Route exact path="/articles/:articleType/:category">
 						<Articles />
 					</Route>

@@ -125,3 +125,47 @@ export const addCategory = (category) => {
 			});
 	});
 };
+
+
+
+export const loginAdmin = (email, password) => {
+	return new Promise((resolve, reject) => {
+		let data = { email: email, password: password };
+		const requestOptions = {
+			method: "post",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(data),
+		};
+
+		fetch("http://localhost:5000/api/v1/user/login", requestOptions)
+			.then(async (response) => {
+				const data = await response.json();
+
+				// check for error response
+				if (!response.ok) {
+					// get error message from body or default to response status
+					const error = (data && data.message) || response.status;
+					return reject(error);
+				}
+				return resolve(data);
+			});
+	})
+};
+
+
+export const registerAdmin = (category) => {
+	return new Promise((resolve, reject) => {
+		let data = { username: "nouman", categorys: [category] };
+		console.log(`data : ${data}`);
+		const requestOptions = {
+			method: "post",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(data),
+		};
+		fetch("http://localhost:5000/api/v1/user/register", requestOptions)
+			.then(() => resolve("Record Created"))
+			.catch((err) => {
+				reject(err);
+			});
+	});
+};

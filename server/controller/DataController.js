@@ -1,6 +1,6 @@
 let database = require('../db/Database');
 let articleDb = require('../db/articleDb');
-
+let userData =require('../db/userData');
 
 exports.getAllData = function (req, res) {
     database.getAllData().then((data) => {
@@ -103,3 +103,20 @@ exports.removeArticles = function (data, res) {
         return res.json({ 'success': false, error: err });
     });
 };
+
+exports.insertUserRecord = (data, res) => {
+    userData.insertUserRecord(data).then(() =>{
+        res.status(200)
+        return res.send(200, {});
+    }).catch(err => {
+        res.status(400)
+        return res.json({ 'success': false, error: err });
+    }) 
+}
+exports.authenticateUser = function (data, res) {
+    userData.authenticateUser(data).then((data) => {
+        return res.json({ 'success': true, data });
+    }).catch((err) => {
+        return res.json({ 'success': false, error: err });
+    })
+}    

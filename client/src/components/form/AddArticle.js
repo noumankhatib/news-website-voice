@@ -51,7 +51,6 @@ class AddArticle extends Component {
 	}
 	handleSubmit = (e) => {
 		e.preventDefault();
-		//  let reader = new FileReader()
 		const {
 			category,
 			title,
@@ -62,14 +61,6 @@ class AddArticle extends Component {
 			image,
 			url,
 		} = this.state;
-		//   console.log("image1"+JSON.stringify(image))
-		//  // let image1 = reader.readAsDataURL(image)
-		// // console.log("welcome"+JSON.stringify(reader.image))
-		//  reader.readAsDataURL(image);//line with error
-		//  reader.onloadend = function() {
-		//      var base64data = reader.result;
-		//      console.log(base64data);
-		//  };
 		const record = {
 			category,
 			title,
@@ -80,7 +71,6 @@ class AddArticle extends Component {
 			image,
 			url,
 		};
-		console.log("record" + JSON.stringify(record));
 
 		addArticle(record)
 			.then((result) => {
